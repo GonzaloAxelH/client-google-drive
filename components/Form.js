@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 const WrapperForm = styled.div`
   width: 300px;
+
   form {
     display: flex;
     flex-direction: column;
@@ -32,14 +33,11 @@ export default function Form({ destino }) {
       });
   };
   return (
-    <WrapperForm>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="">SUBIR ARCHIVOS </label>
-        <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-        <input type="text" value={destino} disabled />
-        <button type="submit">ENVIAR</button>
-      </form>
-    </WrapperForm>
+    <form onSubmit={handleSubmit}>
+      <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+      <input type="text" value={destino} disabled />
+      <button type="submit">ENVIAR</button>
+    </form>
   );
 }
 

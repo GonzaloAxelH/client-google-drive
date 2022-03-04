@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Form from "../../components/Form";
+import styled from "styled-components";
 import Folder from "../../components/Folder";
 import File from "../../components/File";
+import Layout from "../Layout";
+const WrapperDirectory = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2em;
+`;
 const DirectoryRoot = (props) => {
   const [files, setFiles] = useState([]);
   useEffect(() => {
@@ -9,18 +15,21 @@ const DirectoryRoot = (props) => {
   }, [props.data]);
 
   return !files.length == 0 ? (
-    <div>
-      {files.map((el, i) => {
-        if (isFile(el)) {
-          return <File key={i} name={el} />;
-        } else {
-          return <Folder key={i} name={el} to={`root/${el}`} />;
-        }
-      })}
-      <Form destino={props.data.pathEnviado} />
-    </div>
+    <Layout pathActual={props.data.path.name}>
+      <WrapperDirectory>
+        {files.map((el, i) => {
+          if (isFile(el)) {
+            return <File key={i} name={el} />;
+          } else {
+            return <Folder key={i} name={el} to={`root/${el}`} />;
+          }
+        })}
+      </WrapperDirectory>
+    </Layout>
   ) : (
-    <h1>Vacio</h1>
+    <Layout pathActual={props.data.path.name}>
+      <h1>Vacio</h1>
+    </Layout>
   );
 };
 

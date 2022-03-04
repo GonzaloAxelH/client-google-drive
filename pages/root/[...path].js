@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
-
+import Layout from "../Layout";
 import File from "../../components/File";
 import Folder from "../../components/Folder";
 import Form from "../../components/Form";
+import styled from "styled-components";
+const WrapperDirectory = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2em;
+`;
+const Main = styled.div``;
 const Directory = (props) => {
   const [files, setFiles] = useState([]);
   useEffect(() => {
@@ -11,26 +18,22 @@ const Directory = (props) => {
   }, [props.data]);
 
   return files.length != 0 ? (
-    <div>
-      {props.data.content.map((el, i) => {
-        const path = props.data.path;
-        if (isFile(el)) {
-          return <File key={i} name={el} path={path} />;
-        } else {
-          return <Folder key={i} name={el} to={`${path.name}/${el}`} />;
-        }
-      })}
-      <button>
-        <a href="javascript:history.go(-1)">-----------ATRAS-------------</a>
-      </button>
-
-      <Form destino={props.data.path.name} />
-    </div>
+    <Layout pathActual={props.data.path.name}>
+      <WrapperDirectory>
+        {props.data.content.map((el, i) => {
+          const path = props.data.path;
+          if (isFile(el)) {
+            return <File key={i} name={el} path={path} />;
+          } else {
+            return <Folder key={i} name={el} to={`${path.name}/${el}`} />;
+          }
+        })}
+      </WrapperDirectory>
+    </Layout>
   ) : (
-    <div>
+    <Layout pathActual={props.data.path.name}>
       <h1>Directorio vacio</h1>
-      <Form destino={props.data.path.name} />
-    </div>
+    </Layout>
   );
 };
 
